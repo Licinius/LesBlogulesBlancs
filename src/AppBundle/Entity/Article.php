@@ -3,7 +3,6 @@
 // src/AppBundle/Entity/Article.php
 namespace AppBundle\Entity;
 
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="article")
