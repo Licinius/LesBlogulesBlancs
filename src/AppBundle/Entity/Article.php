@@ -3,6 +3,7 @@
 // src/AppBundle/Entity/Article.php
 namespace AppBundle\Entity;
 
+use Doctrine\ORM\Annotation as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="article")
