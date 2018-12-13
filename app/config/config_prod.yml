@@ -10,7 +10,7 @@ imports:
 # Doctrine Configuration
 doctrine:
     dbal:
-        url: '%env(DATABASE_URL)%'
+        url: '%env(HEROKU_POSTGRESQL_YELLOW_URL)%'
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
