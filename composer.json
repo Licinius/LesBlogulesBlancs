@@ -39,11 +39,15 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
+        "warmup": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+        ],
         "post-install-cmd": [
-            "@symfony-scripts"
+            "@symfony-scripts", "@warmup"
         ],
         "post-update-cmd": [
-            "@symfony-scripts"
+            "@symfony-scripts", "@warmup"
         ]
     },
     "config": {
@@ -51,12 +55,6 @@
             "php": "5.6"
         },
         "sort-packages": true
-    },
-    "scripts": {
-        "warmup": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
-        ]
     },
 
     "extra": {
