@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\ArticleType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 class BlogController extends Controller
@@ -34,9 +36,17 @@ class BlogController extends Controller
     /**
      * @Route("/create", name="create")
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
-        return $this->render('post/create.html.twig',[]);
+        $form = $this->createForm(ArticleType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //to_do inserer dans base
+            return $this->redirectToRoute('homepage');
+        }
+        return $this->render('post/create.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -45,5 +55,15 @@ class BlogController extends Controller
     public function createdAction()
     {
         return $this->render('index/index.html.twig', []);
+    }
+
+    /**
+     * @Route("/admin/admin", name="Admin")
+     */
+    public function adminAction()
+    {
+        return $this->render('post/post.html.twig',[
+        "postId"=>1996
+    ]);
     }
 }
