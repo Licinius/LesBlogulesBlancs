@@ -44,10 +44,10 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
         ],
         "post-install-cmd": [
-            "@symfony-scripts", "@warmup"
+            "@symfony-scripts"
         ],
         "post-update-cmd": [
-            "@symfony-scripts", "@warmup"
+            "@symfony-scripts"
         ]
     },
     "config": {
