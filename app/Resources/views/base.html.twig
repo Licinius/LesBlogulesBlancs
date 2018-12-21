@@ -42,7 +42,7 @@
                 <ul class="nav navbar-nav">
                     {% if is_granted('ROLE_ADMIN')%}
                     <li>
-                        <a href="/create"> Créer article</a>
+                        <a href="/admin/create"> Créer article</a>
                     </li>
                     {% endif %}
                     {% if is_granted('ROLE_SUPER_ADMIN')%}

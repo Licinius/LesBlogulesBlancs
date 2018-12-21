@@ -2,10 +2,14 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Article;
 use AppBundle\Form\ArticleType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Validator\Constraints\Date;
+
 class BlogController extends Controller
 {
     /**
@@ -13,14 +17,14 @@ class BlogController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $query = $em ->createQuery(
             'SELECT a
             FROM AppBundle:Article a
             ORDER BY a.published'
         )->setMaxResults(10);
-        $products = $query->getResult();
-        return $this->render('index/index.html.twig', ["products"=>$products]);
+        $articles = $query->getResult();
+        return $this->render('index/index.html.twig', ["articles"=>$articles]);
     }
 
     /**
@@ -34,27 +38,35 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/create", name="create")
+     * @Route("/admin/create", name="create")
      */
     public function createAction(Request $request)
     {
+        $this->get('logger')->info("Form created");
         $form = $this->createForm(ArticleType::class);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            //to_do inserer dans base
+            $article = new Article();
+
+            $title = $form->get('Title')->getData();
+            $article->setTitle($title);
+            $article->setContent($form->get('Description')->getData());
+
+            try {
+                $article->setPublished(new \DateTime("now",new \DateTimeZone("Europe/Paris")));
+            } catch (\Exception $e) {
+                return $this->redirectToRoute('homepage');
+            }
+            $article->setUrlAlias(str_replace(" ","-",$title));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
             return $this->redirectToRoute('homepage');
         }
         return $this->render('post/create.html.twig', array(
             'form' => $form->createView(),
         ));
-    }
-
-    /**
-     * @Route("/created", name="created")
-     */
-    public function createdAction()
-    {
-        return $this->render('index/index.html.twig', []);
     }
 
     /**
