@@ -24,7 +24,7 @@ class Article
     protected $title;
 
     /**
-     * @Gedmo\Slug(fields={"title","id"})
+     * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(name="urlAlias",type="string", length=300,unique=true)
      */
     protected $url_alias;
