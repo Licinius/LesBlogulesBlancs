@@ -35,20 +35,34 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Home</a>
+                <a class="navbar-brand" href="/">Accueil</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    {% if is_granted('ROLE_ADMIN')%}
                     <li>
                         <a href="/create"> Créer article</a>
                     </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_SUPER_ADMIN')%}
                     <li>
                         <a href="#">Administration</a>
                     </li>
-                    <li>
-                        <a href="/logout">Déconnexion</a>
-                    </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_USER')%}
+                        <li>
+                            <a href="/logout">Déconnexion</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_USER')==false %}
+                        <li>
+                            <a href="/login">Connexion</a>
+                        </li>
+                        <li>
+                            <a href="/register">S'enregistrer</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
