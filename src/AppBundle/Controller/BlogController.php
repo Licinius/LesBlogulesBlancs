@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Constraints\Date;
-
 class BlogController extends Controller
 {
     /**
@@ -32,11 +31,33 @@ class BlogController extends Controller
      */
     public function postAction($postId=1)
     {
+        $em= $this->getDoctrine()->getManager();
+        $article = $em->find('AppBundle:Article',$postId);
         return $this->render('post/post.html.twig',[
-                "postId"=>$postId
+                "article"=>$article
             ]);
     }
-
+    /**
+     * @Route("/post/{alias}", name="post")
+     */
+    public function postAliasAction($alias)
+    {
+        $em= $this->getDoctrine()->getManager();
+        $query = $em ->createQuery(
+            'SELECT a
+            FROM AppBundle:Article a
+            WHERE a.url_alias = :alias
+            ORDER BY a.published '
+        );
+        $query->setParameter('alias',urlencode($alias));
+        $article = $query->getResult();
+        if($article==null){
+            throw $this->createNotFoundException('L\'article avec l\'alias '.$alias.' n\'existe pas ou plus' );
+        }
+        return $this->render('post/post.html.twig',[
+            "article"=>$article[0]
+        ]);
+    }
     /**
      * @Route("/admin/create", name="create")
      */
@@ -54,11 +75,11 @@ class BlogController extends Controller
             $article->setContent($form->get('Description')->getData());
 
             try {
-                $article->setPublished(new \DateTime("now",new \DateTimeZone("Europe/Paris")));
+                $article->setPublished(new \DateTime("now", new \DateTimeZone("Europe/Paris")));
             } catch (\Exception $e) {
                 return $this->redirectToRoute('homepage');
             }
-            $article->setUrlAlias(str_replace(" ","-",$title));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();

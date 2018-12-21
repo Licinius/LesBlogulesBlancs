@@ -4,10 +4,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity
  * @ORM\Table(name="article")
- *
  */
 class Article
 {
@@ -24,7 +24,8 @@ class Article
     protected $title;
 
     /**
-     * @ORM\Column(type="string", length=300)
+     * @Gedmo\Slug(fields={"title","id"})
+     * @ORM\Column(name="urlAlias",type="string", length=300,unique=true)
      */
     protected $url_alias;
 

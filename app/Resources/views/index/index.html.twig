@@ -22,10 +22,10 @@
                     <h2>
                         <a href="#">{{article.title}}</a>
                     </h2>
-                    <p><span class="glyphicon glyphicon-time"></span> {{ article.published.format('Y-m-d G:ia') }}</p>
+                    <p><span class="glyphicon glyphicon-time"></span> {{ article.published.format('d/m/Y G:ia') }}</p>
 
                     <p>{{ article.content }}</p>
-                    <a class="btn btn-primary" href="/post/{{ article.id }}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <a class="btn btn-primary" href="/post/{{ article.urlAlias }}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 {% endfor %}
                 <hr>
 
