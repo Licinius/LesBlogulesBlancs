@@ -103,7 +103,32 @@ class BlogController extends Controller
         }
         return $this->redirectToRoute('homepage');
     }
-
+    /**
+     * @Route("/admin/edit/{postId}", name="edit",requirements={"postId"="\d+"})
+     */
+    public function EditAction(Request $request,$postId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->find("AppBundle:Article", $postId);
+        $this->get('logger')->info("Form created");
+        $form = $this->createForm(ArticleType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $title = $form->get('Title')->getData();
+            $article->setTitle($title);
+            $article->setContent($form->get('Description')->getData());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+            return $this->redirectToRoute('post',["alias"=>$article->getUrlAlias()]);
+        }else{
+            $form->get("Title")->setData($article->getTitle());
+            $form->get("Description")->setData($article->getContent());
+        }
+        return $this->render('post/create.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
     /**
      * @Route("/admin/admin", name="Admin")
      */

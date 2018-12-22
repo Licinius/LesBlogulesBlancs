@@ -9,7 +9,9 @@
         <p><span class="glyphicon glyphicon-time"></span> {{ article.published.format('d/m/Y G:ia') }}</p>
 
         <p>{{ article.content }}</p>
+
         {% if is_granted('ROLE_ADMIN')%}
+            <a class="btn btn-info"href="/admin/edit/{{ article.id }}" >Editer</a>
             <a class="btn btn-danger"href="/admin/delete/{{ article.id }}" onclick="return confirm('Voulez vous vraiment supprimer cet article? ')"  >Supprimer</a>
         {% endif %}
     </div>
