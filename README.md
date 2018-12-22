@@ -9,7 +9,7 @@ Les Blogules Blancs
 ## Compte et accès
 
 | Role          |   Login         |   Password |
-| ------------- |: -------------: | ---------: |
+| ------------- | ------------- | --------- |
 | super_admin   | davidH          | survivor   |
 | user          | tomS            | magnum     |
 
@@ -19,7 +19,7 @@ Plusieurs bundles sont présents sur :
 - [StofDoctrineExtensionsBundle](https://github.com/stof/StofDoctrineExtensionsBundle)
 - [FosUserBundle](https://github.com/FriendsOfSymfony/FOSUserBundle)
 
-##Appréciation du cours
+## Appréciation du cours
 
 
 
