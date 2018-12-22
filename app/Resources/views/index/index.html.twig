@@ -20,12 +20,12 @@
 
                 {% for article in articles %}
                     <h2>
-                        <a href="#">{{article.title}}</a>
+                        <a href="/post/{{ article.urlAlias }}">{{article.title}}</a>
                     </h2>
                     <p><span class="glyphicon glyphicon-time"></span> {{ article.published.format('d/m/Y G:ia') }}</p>
 
                     <p>{{ article.content }}</p>
-                    <a class="btn btn-primary" href="/post/{{ article.urlAlias }}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <a class="btn btn-primary" href="/post/{{ article.urlAlias }}">Lire l'article<span class="glyphicon glyphicon-chevron-right"></span></a>
                 {% endfor %}
                 <hr>
 
@@ -85,11 +85,4 @@
     </div>
     <!-- /.container -->
 
-{% endblock %}
-{% block javascripts %}
-    <!-- jQuery -->
-    <script src="{{ asset('js/jquery.js')}}"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{asset('web/js/bootstrap.min.js')}}"></script>
 {% endblock %}
