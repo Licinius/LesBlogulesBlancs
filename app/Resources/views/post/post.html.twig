@@ -2,12 +2,15 @@
 
 {% block body %}
     <div class="col-md-8">
-    <h3>Je suis le post n° {{article.id}}</h3>
-    <h2>
-        <a href="#">{{article.title}}</a>
-    </h2>
-    <p><span class="glyphicon glyphicon-time"></span> {{ article.published.format('d/m/Y G:ia') }}</p>
+        <h3>Je suis le post n° {{article.id}}</h3>
+        <h2>
+            <a href="#">{{article.title}}</a>
+        </h2>
+        <p><span class="glyphicon glyphicon-time"></span> {{ article.published.format('d/m/Y G:ia') }}</p>
 
-    <p>{{ article.content }}</p>
+        <p>{{ article.content }}</p>
+        {% if is_granted('ROLE_ADMIN')%}
+            <a class="btn btn-danger"href="/admin/delete/{{ article.id }}" onclick="return confirm('Voulez vous vraiment supprimer cet article? ')"  >Supprimer</a>
+        {% endif %}
     </div>
 {% endblock %}

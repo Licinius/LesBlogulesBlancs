@@ -91,6 +91,20 @@ class BlogController extends Controller
     }
 
     /**
+     * @Route("/admin/delete/{postId}", name="delete",requirements={"postId"="\d+"})
+     */
+    public function deleteAction($postId){
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->find("AppBundle:Article",$postId);
+        if($article!=null){
+            $em->remove($article);
+            $em->flush();
+
+        }
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
      * @Route("/admin/admin", name="Admin")
      */
     public function adminAction()
